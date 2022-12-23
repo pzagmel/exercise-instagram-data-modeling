@@ -21,11 +21,16 @@ class Follower(Base):
     id = Column(Integer, primary_key=True)
     user_from_id = Column(Integer, ForeignKey('user.id'))   
     user_to_id = Column(Integer, ForeignKey('user.id'))
+    follower_relation = relationship('follower')
+    user_relation = relationship('user')
 
 class Post(Base):
     __tablename__ = 'post'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
+    media_relation = relationship('media')
+    comment_relation = relationship('comment')
+    user_relation = relationship('user')
 
 class Media(Base):
     __tablename__ = 'media'
@@ -33,6 +38,7 @@ class Media(Base):
     tipo = Column(Integer, nullable=False)  
     url = Column(String(50), nullable=False)  
     post_id = Column(Integer, ForeignKey('post.id')) 
+    post_relation = relationship('post')
 
 class Comment(Base):
     __tablename__ = 'comment'
@@ -40,7 +46,8 @@ class Comment(Base):
     comment_text = Column(String(250), nullable=False)
     author_id = Column(Integer, ForeignKey('user.id'))
     post_id = Column(Integer, ForeignKey('post.id'))
-       
+    post_relation = relationship('post')
+    user_relation = relationship('user') 
 
 ## Draw from SQLAlchemy base
 try:
